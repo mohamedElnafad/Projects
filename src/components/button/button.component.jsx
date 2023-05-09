@@ -1,10 +1,11 @@
 import "./button.styles.css";
-const Button = ({ type, title, user_id, onClick }) => {
+import Button from "react-bootstrap/Button";
+const ButtonComp = ({ type, title, onClick }) => {
   return (
-    <button onClick={onClick} type={type}>
+    <Button variant="secondary" size="sm" onClick={onClick} type={type}>
       {title}
-    </button>
+    </Button>
   );
 };
 
-export default Button;
+export default ButtonComp;

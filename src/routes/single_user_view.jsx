@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import Card from "react-bootstrap/Card";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context-management/user.context";
@@ -21,13 +22,17 @@ const SingleUserView = () => {
   return (
     <div>
       {person ? (
-        <>
-          <h1>
-            {person.first_name} {person.second_name}
-          </h1>
-
-          <img src={person.avatar} alt={person.first_name} />
-        </>
+        <Card style={{ width: "18rem ", margin: "20px auto" }}>
+          <Card.Img variant="top" src={person.avatar} />
+          <Card.Body style={{ textAlign: "center" }}>
+            <Card.Title>
+              {person.first_name} {person.last_name}
+            </Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+              {person.email}
+            </Card.Subtitle>
+          </Card.Body>
+        </Card>
       ) : (
         <p>Loading...</p>
       )}
