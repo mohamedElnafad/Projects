@@ -1,0 +1,10 @@
+.container {
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+}
