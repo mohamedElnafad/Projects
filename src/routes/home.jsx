@@ -23,14 +23,21 @@ const Home = () => {
     <div className="container">
       <h2>User Management</h2>
       {console.log(localUsers)}
-      <Button title="Logout" type="button" onClick={logOutHanlder} />
-      <Button
-        title="Add new user"
-        type="button"
-        onClick={() => {
-          navigate(`/create-new-user`);
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
         }}
-      />
+      >
+        <Button
+          title="Add new user"
+          type="button"
+          onClick={() => {
+            navigate(`/create-new-user`);
+          }}
+        />
+        <Button title="Logout" type="button" onClick={logOutHanlder} />
+      </div>
       <div className="grid-container">
         {localUsers.map((user) => {
           return (
