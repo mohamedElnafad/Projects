@@ -34,7 +34,7 @@ const SingleUserView = () => {
           </Card.Body>
         </Card>
       ) : (
-        <p>Loading...</p>
+        <p style={{ textAlign: "center" }}>Loading...</p>
       )}
     </div>
   );

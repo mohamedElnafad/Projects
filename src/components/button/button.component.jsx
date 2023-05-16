@@ -1,8 +1,8 @@
 import "./button.styles.css";
-import Button from "react-bootstrap/Button";
-const ButtonComp = ({ type, title, onClick }) => {
+import Button from "@mui/material/Button";
+const ButtonComp = ({ type, isfullWidth, variant, title, onClick }) => {
   return (
-    <Button variant="secondary" size="sm" onClick={onClick} type={type}>
+    <Button variant={variant} onClick={onClick} type={type} fullwidth>
       {title}
     </Button>
   );

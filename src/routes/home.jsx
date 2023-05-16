@@ -1,5 +1,5 @@
 import CardCom from "../components/card/card-component";
-import Button from "../components/button/button.component";
+import ButtonComp from "../components/button/button.component";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context-management/user.context";
@@ -29,30 +29,35 @@ const Home = () => {
           justifyContent: "space-between",
         }}
       >
-        <Button
+        <ButtonComp
+          variant="contained"
           title="Add new user"
           type="button"
           onClick={() => {
             navigate(`/create-new-user`);
           }}
         />
-        <Button title="Logout" type="button" onClick={logOutHanlder} />
+        <ButtonComp
+          title="Logout"
+          variant="outlined"
+          type="button"
+          onClick={logOutHanlder}
+        />
       </div>
       <div className="grid-container">
         {localUsers.map((user) => {
           return (
-            <>
-              <CardCom
-                key={user.id}
-                first_name={user.first_name}
-                last_name={user.last_name}
-                email={user.email}
-                avatar={user.avatar}
-                onClick={() => {
-                  navigate(`/single-user/${user.id}`);
-                }}
-              />
-            </>
+            <CardCom
+              key={user.id}
+              user_id={user.id}
+              first_name={user.first_name}
+              last_name={user.last_name}
+              email={user.email}
+              avatar={user.avatar}
+              onClicked={() => {
+                navigate(`/single-user/${user.id}`);
+              }}
+            />
           );
         })}
       </div>

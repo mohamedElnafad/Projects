@@ -22,6 +22,7 @@ export const UserProvider = ({ children }) => {
         setUsers(response.data.data);
         setLoacalUsers(response.data.data);
         console.log("useEffect");
+        console.log(localUsers);
       } catch (e) {
         console.log(e);
       }
@@ -34,6 +35,7 @@ export const UserProvider = ({ children }) => {
         .delete(`https://reqres.in/api/users/${id}`)
         .then((response) => console.log(response));
       setLoacalUsers(localUsers.filter((user) => user.id !== id));
+      console.log(`User with ID ${id} has been deleted`);
     } catch (error) {
       console.log(error);
     }

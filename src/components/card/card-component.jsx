@@ -4,22 +4,30 @@ import "./card-component.css";
 import { useContext } from "react";
 import { UserContext } from "../../context-management/user.context";
 
-const CardCom = ({ first_name, last_name, avatar, email, user_id, onClick }) => {
+const CardCom = ({
+  first_name,
+  last_name,
+  avatar,
+  email,
+  user_id,
+  onClicked,
+}) => {
   const navigate = useNavigate();
   const { deleteHandler } = useContext(UserContext);
   const deleteUser = (id) => {
     deleteHandler(id);
   };
   return (
-    <div class="user-card" onClick={onClick}>
-      <img src={avatar} alt="Card-image" />
-      <div class="user-card-body">
-        <h5 class="card-title">
+    <div className="user-card" o>
+      <img src={avatar} alt="Card-image" onClick={onClicked} />
+      <div className="user-card-body">
+        <h5 className="card-title">
           {first_name} {last_name}
         </h5>
-        <p class="user-card-text">{email}</p>
+        <p className="user-card-text">{email}</p>
         <div className="buttons">
           <ButtonComp
+            variant="contained"
             title="Update"
             type="button"
             onClick={() => {
@@ -28,6 +36,7 @@ const CardCom = ({ first_name, last_name, avatar, email, user_id, onClick }) => 
           />
           <ButtonComp
             title="Delete"
+            variant="outlined"
             type="button"
             onClick={() => deleteUser(user_id)}
           />
