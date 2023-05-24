@@ -1,62 +1,78 @@
-.user-card {
+.card {
   display: flex;
+  align-items: center;
   flex-direction: row;
-  align-items: center;
-  height: 170px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  min-width: 90%;
-  max-width: 100%;
-  margin: 20px;
-}
-.user-card:hover {
-  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
+  /* border: 1px solid #ccc; */
+  box-shadow: 2px 2px 0.5em rgba(97, 97, 97, 0.644);
+  border-radius: 8px;
+  padding: 16px;
 }
 
-.user-card img {
-  cursor: pointer;
-  height: 80px;
+.image-container {
+  margin-right: 16px;
+}
+
+.round-image {
   width: 80px;
-  border-radius: 100%;
-  padding: 10px;
+  height: 80px;
+  border-radius: 50%;
 }
 
-.user-card p {
-  color: gray;
-  opacity: 80%;
+.content {
+  flex-grow: 1;
 }
 
-.buttons {
+.name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.email,
+.job-title {
+  margin-bottom: 8px;
+}
+
+.actions {
+  text-align: right;
+}
+
+.buttons-container {
+  background-color: #fff;
+  /* border: 1px solid #ccc; */
+  border-radius: 4px;
+  padding: 8px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+
+  gap: 8px;
+  margin-top: 5px;
+  z-index: 100;
+}
+.icon-container {
+  position: relative;
+  display: inline-block;
+}
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+  border-radius: 4px;
+  padding: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
-@media only screen and (max-width: 768px) {
-  .user-card {
-    flex-direction: column;
-    align-items: center;
-    line-height: 2px;
-  }
+.icon-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
 
-  .user-card img {
-    width: 70px;
-    height: 70px;
-  }
-
-  .user-card-body {
-    text-align: center;
-  }
-
-  .card-title {
-    font-size: 1rem;
-    /* margin-bottom: 16px; */
-  }
-
-  .user-card-text {
-    font-size: 1rem;
-    margin-bottom: 10px;
-  }
+.delete {
+  color: rgb(255, 29, 29);
 }

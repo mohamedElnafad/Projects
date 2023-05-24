@@ -7,17 +7,18 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import FormInput from "../components/form-input/form-input.component";
+import { useNavigate } from "react-router-dom";
 const CreateNewUser = () => {
   const { localUsers, setLoacalUsers } = useContext(UserContext);
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
     email: "",
     password: "",
+    avatar:
+      "https://t4.ftcdn.net/jpg/00/65/77/27/240_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
   });
-
-  const [responseData, setResponseData] = useState({});
 
   // handle the inputs
   const handleInputChange = (event) => {
@@ -29,43 +30,28 @@ const CreateNewUser = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      if (
-        responseData &&
-        formData.first_name &&
-        formData.last_name &&
-        formData.email &&
-        formData.password
-      ) {
-        const response = await axios.post(
-          "https://reqres.in/api/users",
-          formData
-        );
-        setResponseData(response);
-        setLoacalUsers([...localUsers, response.data]);
-
+      const response = await axios.post(
+        "https://reqres.in/api/users",
+        formData
+      );
+      console.log(response);
+      if (response.status === 201) {
+        // setResponseData(response);
+        setLoacalUsers([...localUsers, formData]);
         console.log(localUsers);
-        // console.log(response);
         setFormData({
           email: "",
           first_name: "",
           last_name: "",
           password: "",
         });
+        navigate("/");
+
+        console.log(localUsers);
+        // console.log(response);
       }
     } catch (error) {
       alert(error.message);
-    }
-  };
-  // handle alert for successfull user creation
-  const handleAlert = () => {
-    if (
-      responseData &&
-      formData.first_name &&
-      formData.last_name &&
-      formData.email &&
-      formData.password
-    ) {
-      alert("User created successfully!");
     }
   };
   const theme = createTheme();
@@ -73,7 +59,7 @@ const CreateNewUser = () => {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <h1 style={{ textAlign: "center" }}>Create New User</h1>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box component="form" Validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <FormInput
@@ -117,10 +103,9 @@ const CreateNewUser = () => {
             fullWidth
             type="submit"
             variant="contained"
-            onClick={handleAlert}
             sx={{ mt: 3, mb: 2 }}
           >
-            Update User{" "}
+            Create new user{" "}
           </Button>
         </Box>
       </Container>

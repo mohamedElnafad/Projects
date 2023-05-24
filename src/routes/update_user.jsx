@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -8,9 +8,26 @@ import Button from "@mui/material/Button";
 
 import FormInput from "../components/form-input/form-input.component";
 import axios from "axios";
+import { UserContext } from "../context-management/user.context";
 
 const UpdateUser = () => {
   const { id } = useParams();
+  const { localUsers, setLoacalUsers } = useContext(UserContext);
+  const currentUsers = [...localUsers];
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const userDataResponse = await axios.get(
+  //         `https://reqres.in/api/users/${id}`
+  //       );
+  //       // setUser(userDataResponse.data);
+  //     } catch (error) {
+  //       alert(error.message);
+  //     }
+  //   })();
+  // }, [id]);
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -18,23 +35,7 @@ const UpdateUser = () => {
     password: "",
   });
 
-  // get specific user from APi by his ID
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    (async () => {
-      try {
-        const userDataResponse = await axios.get(
-          `https://reqres.in/api/users/${id}`
-        );
-        setUser(userDataResponse.data);
-        console.log(userDataResponse);
-      } catch (error) {
-        alert(error.message);
-      }
-    })();
-  }, [id]);
-
-  const [responseData, setResponseData] = useState({});
+  //const [responseData, setResponseData] = useState({});
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -42,45 +43,24 @@ const UpdateUser = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (
-      responseData &&
-      formData.first_name &&
-      formData.last_name &&
-      formData.email &&
-      formData.password
-    ) {
-      try {
-        axios
-          .put(`https://reqres.in/api/users/${id}`, user)
-          .then((response) => {
-            setResponseData(response);
-          });
-        setFormData({
-          first_name: "",
-          last_name: "",
-          email: "",
-          password: "",
-        });
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
+    console.log(formData);
+    // const response = await axios.put(
+    //   `https://reqres.in/api/users/${id}`,
+    //   formData
+    // );
+
+    currentUsers[id - 1].first_name = formData.first_name;
+    currentUsers[id - 1].last_name = formData.last_name;
+    currentUsers[id - 1].email = formData.email;
+    currentUsers[id - 1].password = formData.password;
+    setLoacalUsers(currentUsers);
+    navigate("/");
   };
-  const handleAlert = () => {
-    if (
-      responseData &&
-      formData.first_name &&
-      formData.last_name &&
-      formData.email &&
-      formData.password
-    ) {
-      alert("User is updated now");
-    }
-  };
+
   return (
     <Container component="main" maxWidth="xs">
       <h1 style={{ textAlign: "center" }}>Update User Info</h1>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+      <Box component="form" Validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <FormInput
@@ -100,11 +80,13 @@ const UpdateUser = () => {
               onChange={handleInputChange}
             />
           </Grid>
+
           <Grid item xs={12}>
             <FormInput
-              lable_title="Email: "
+              lable_title="email"
               type="email"
               name="email"
+              placeholder="user@example.com"
               value={formData.email}
               onChange={handleInputChange}
             />
@@ -112,7 +94,7 @@ const UpdateUser = () => {
 
           <Grid item xs={12}>
             <FormInput
-              lable_title="Password: "
+              lable_title="New Password: "
               type="password"
               name="password"
               value={formData.password}
@@ -124,7 +106,6 @@ const UpdateUser = () => {
           fullWidth
           type="submit"
           variant="contained"
-          onClick={handleAlert}
           sx={{ mt: 3, mb: 2 }}
         >
           Update User{" "}

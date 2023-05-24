@@ -1,47 +1,34 @@
 import CardCom from "../components/card/card-component";
 import ButtonComp from "../components/button/button.component";
-import { useState, useEffect, useContext } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context-management/user.context";
 import "./home.styles.css";
 
 const Home = () => {
   const { localUsers } = useContext(UserContext);
-  const { setIsAuthenticated } = useContext(UserContext);
 
   const [query, setquery] = useState("");
   // const [filterationData, setFilterationData] = useState(users);
 
   const navigate = useNavigate();
-
-  const logOutHanlder = () => {
-    localStorage.removeItem("token");
-    setIsAuthenticated(false);
-  };
-
   return (
     <div className="container">
-      <h2>User Management</h2>
       {console.log(localUsers)}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+      <div className="header">
+        <h2>User Management</h2>
         <ButtonComp
-          variant="contained"
-          title="Add new user"
+          style={{
+            borderRadius: "20px",
+          }}
+          endIcon={<AddIcon />}
+          variant="outlined"
+          title="Add user"
           type="button"
           onClick={() => {
             navigate(`/create-new-user`);
           }}
-        />
-        <ButtonComp
-          title="Logout"
-          variant="outlined"
-          type="button"
-          onClick={logOutHanlder}
         />
       </div>
       <div className="grid-container">
@@ -65,3 +52,16 @@ const Home = () => {
   );
 };
 export default Home;
+
+// const { setIsAuthenticated } = useContext(UserContext);
+// const logOutHanlder = () => {
+//   localStorage.removeItem("token");
+//   setIsAuthenticated(false);
+// };
+// logout button
+// <ButtonComp
+//   title="Logout"
+//   variant="outlined"
+//   type="button"
+//   onClick={logOutHanlder}
+// />

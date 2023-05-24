@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
     (async () => {
       try {
         const response = await axios.get("https://reqres.in/api/users");
+
         setUsers(response.data.data);
         setLoacalUsers(response.data.data);
         console.log("useEffect");

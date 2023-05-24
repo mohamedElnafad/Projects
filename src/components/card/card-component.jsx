@@ -1,8 +1,10 @@
-import ButtonComp from "../button/button.component";
-import { useNavigate } from "react-router-dom";
-import "./card-component.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../context-management/user.context";
+import SettingsIcon from "@mui/icons-material/Settings";
+import DeleteIcon from "@mui/icons-material/Delete";
+import "./card-component.css";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useNavigate } from "react-router-dom";
 
 const CardCom = ({
   first_name,
@@ -12,35 +14,53 @@ const CardCom = ({
   user_id,
   onClicked,
 }) => {
+  const [showButtons, setShowButtons] = useState(false);
+
   const navigate = useNavigate();
   const { deleteHandler } = useContext(UserContext);
   const deleteUser = (id) => {
-    deleteHandler(id);
+    const confirmed = window.confirm("Are you sure you want to delete?");
+    if (confirmed) {
+      deleteHandler(id);
+    }
   };
   return (
-    <div className="user-card" o>
-      <img src={avatar} alt="Card-image" onClick={onClicked} />
-      <div className="user-card-body">
-        <h5 className="card-title">
+    <div className="card">
+      <div className="image-container">
+        <img src={avatar} alt="Profile-user-img" className="round-image" />
+      </div>
+      <div className="content">
+        <h3 className="name">
           {first_name} {last_name}
-        </h5>
-        <p className="user-card-text">{email}</p>
-        <div className="buttons">
-          <ButtonComp
-            variant="contained"
-            title="Update"
-            type="button"
-            onClick={() => {
-              navigate(`/update-user/${user_id}`);
-            }}
-          />
-          <ButtonComp
-            title="Delete"
-            variant="outlined"
-            type="button"
-            onClick={() => deleteUser(user_id)}
-          />
-        </div>
+        </h3>
+        <p className="email">{email}</p>
+      </div>
+      <div className="actions">
+        <MoreVertIcon
+          onClick={() => {
+            setShowButtons(!showButtons);
+          }}
+        />
+        {showButtons && (
+          <div className="buttons-container">
+            <div className="icon-container">
+              <span class="tooltip">update user</span>
+              <SettingsIcon
+                className="icon"
+                onClick={() => {
+                  navigate(`/update-user/${user_id}`);
+                }}
+              />
+            </div>
+            <div className="icon-container">
+              <span class="tooltip">delete user</span>
+              <DeleteIcon
+                onClick={() => deleteUser(user_id)}
+                className="delete icon"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
